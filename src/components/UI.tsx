@@ -83,7 +83,7 @@ const UI: VFC = () => {
 
                     if (orbitControls && focusObject) {
                       focusObject.getWorldPosition(
-                        orbitControls.target as Vector3
+                        orbitControls?.target as Vector3
                       );
                     }
                   }}

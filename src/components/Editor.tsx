@@ -27,7 +27,7 @@ import {
 } from './elements';
 
 const EditorScene = () => {
-  const orbitControlsRef = useRef<OrbitControls>();
+  const orbitControlsRef = useRef<any>();
   const { camera } = useThree();
 
   const [
@@ -118,13 +118,12 @@ const Editor: VFC = () => {
                   <>
                     <div className="relative z-0 h-full">
                       <Canvas
-                        colorManagement
+                        linear={false}
                         camera={{ position: [20, 20, 20] }}
                         onCreated={({ gl }) => {
                           gl.setClearColor('white');
                         }}
-                        shadowMap
-                        pixelRatio={window.devicePixelRatio}
+                        dpr={window.devicePixelRatio}
                         onPointerMissed={() => setSelected(null)}
                       >
                         <EditorScene />

@@ -9,7 +9,6 @@ import React, {
 import { useEditorStore } from '../store';
 import { createPortal } from 'react-three-fiber';
 import EditableProxy from './EditableProxy';
-import { OrbitControls } from '@react-three/drei';
 import TransformControls from './TransformControls';
 import shallow from 'zustand/shallow';
 import {
@@ -22,7 +21,7 @@ import {
 } from 'three';
 
 export interface ProxyManagerProps {
-  orbitControlsRef: React.MutableRefObject<OrbitControls | undefined>;
+  orbitControlsRef: React.MutableRefObject<any>;
 }
 
 type EditableProxy = {
@@ -63,21 +62,23 @@ const ProxyManager: VFC<ProxyManagerProps> = ({ orbitControlsRef }) => {
 
     const editableProxies: { [name: string]: EditableProxy } = {};
 
-    sceneProxy.traverse((object) => {
+    sceneProxy.traverse((object: Object3D) => {
       if (object.userData.__editable) {
         // there are duplicate uniqueNames in the scene, only display one instance in the editor
         if (editableProxies[object.userData.__editableName]) {
           object.parent!.remove(object);
         } else {
           editableProxies[object.userData.__editableName] = {
-            portal: createPortal(
-              <EditableProxy
-                editableName={object.userData.__editableName}
-                editableType={object.userData.__editableType}
-                object={object}
-              />,
-              object.parent
-            ),
+            portal: object.parent
+              ? createPortal(
+                  <EditableProxy
+                    editableName={object.userData.__editableName}
+                    editableType={object.userData.__editableType}
+                    object={object}
+                  />,
+                  object.parent
+                )
+              : null,
             object: object,
           };
         }
@@ -127,7 +128,7 @@ const ProxyManager: VFC<ProxyManagerProps> = ({ orbitControlsRef }) => {
       [id: string]: Material | Material[];
     } = {};
 
-    sceneProxy.traverse((object) => {
+    sceneProxy.traverse((object: Object3D) => {
       const mesh = object as Mesh;
       if (mesh.isMesh && !mesh.userData.helper) {
         renderMaterials[mesh.id] = mesh.material;
@@ -150,7 +151,7 @@ const ProxyManager: VFC<ProxyManagerProps> = ({ orbitControlsRef }) => {
       return;
     }
 
-    sceneProxy.traverse((object) => {
+    sceneProxy.traverse((object: Object3D) => {
       const mesh = object as Mesh;
       if (mesh.isMesh && !mesh.userData.helper) {
         let material;
@@ -225,7 +226,9 @@ const ProxyManager: VFC<ProxyManagerProps> = ({ orbitControlsRef }) => {
               editableProxies[selected].object.matrix.clone()
             );
           }}
-          onDraggingChange={(event) => (isBeingEdited.current = event.value)}
+          onDraggingChange={(event: any) =>
+            (isBeingEdited.current = event.value)
+          }
         />
       )}
       {Object.values(editableProxies).map(({ portal }) => portal)}

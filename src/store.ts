@@ -155,20 +155,20 @@ export interface EditableState {
 }
 
 export type EditorStore = {
-  scene: Scene | null;
+  scene: Scene | null | undefined;
   gl: WebGLRenderer | null;
   allowImplicitInstancing: boolean;
-  orbitControlsRef: MutableRefObject<OrbitControls | undefined> | null;
+  orbitControlsRef: MutableRefObject<any> | null;
   editables: Record<string, Editable>;
   // this will come in handy when we start supporting multiple canvases
   canvasName: string;
-  initialState: EditableState | null;
+  initialState: EditableState | null | undefined;
   selected: string | null;
   transformControlsMode: TransformControlsMode;
   transformControlsSpace: TransformControlsSpace;
   viewportShading: ViewportShading;
   editorOpen: boolean;
-  sceneSnapshot: Scene | null;
+  sceneSnapshot: Scene | null | undefined;
   editablesSnapshot: Record<string, EditableSnapshot> | null;
   hdrPaths: string[];
   selectedHdr: string | null;
@@ -184,7 +184,7 @@ export type EditorStore = {
     initialState?: EditableState
   ) => void;
   setOrbitControlsRef: (
-    orbitControlsRef: MutableRefObject<OrbitControls | undefined>
+    orbitControlsRef: MutableRefObject<typeof OrbitControls | undefined>
   ) => void;
   addEditable: <T extends EditableType>(
     type: T,
@@ -222,7 +222,11 @@ interface PersistedState {
 const config: StateCreator<EditorStore> = (set, get) => {
   setTimeout(() => {
     const existingHandler = DefaultLoadingManager.onProgress;
-    DefaultLoadingManager.onProgress = (url, loaded, total) => {
+    DefaultLoadingManager.onProgress = (
+      url: string,
+      loaded: number,
+      total: number
+    ) => {
       existingHandler(url, loaded, total);
       if (url.match(/\.hdr$/)) {
         set((state) => {
