@@ -49,17 +49,6 @@
     "react-three-fiber": "*",
     "three": "*"
   },
-  "husky": {
-    "hooks": {
-      "pre-commit": "tsdx lint"
-    }
-  },
-  "prettier": {
-    "printWidth": 80,
-    "semi": true,
-    "singleQuote": true,
-    "trailingComma": "es5"
-  },
   "name": "react-three-editable",
   "author": "Andrew Prifer",
   "size-limit": [
