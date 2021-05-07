@@ -147,6 +147,7 @@ const EditableProxy: VFC<EditableProxyProps> = ({
     selected === editableName || dimensionless.includes(editableType) || hovered
       ? Helper
       : null,
+    //@ts-ignore
     ...helperArgs
   );
 

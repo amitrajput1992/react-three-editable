@@ -54,11 +54,12 @@ const ReferenceWindow: VFC<ReferenceWindowProps> = ({ height }) => {
     <div className="rounded overflow-hidden shadow-2xl">
       <canvas
         ref={canvasRef}
-        width={
-          ((bounds.width || gl.domElement.width) /
-            (bounds.height || gl.domElement.height)) *
-          height
-        }
+        // width={
+        //   ((bounds.width || gl.domElement.width) /
+        //     (bounds.height || gl.domElement.height)) *
+        //   height
+        // }
+        width={height}
         height={height}
       />
     </div>

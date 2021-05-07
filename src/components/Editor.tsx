@@ -11,7 +11,6 @@ import { useEditorStore } from '../store';
 import { OrbitControls, Environment } from '@react-three/drei';
 import shallow from 'zustand/shallow';
 import root from 'react-shadow';
-import styles from '../styles.css';
 import UI from './UI';
 import ProxyManager from './ProxyManager';
 import {
@@ -25,6 +24,8 @@ import {
   ModalBody,
   IdProvider,
 } from './elements';
+import "../styles.scss";
+
 
 const EditorScene = () => {
   const orbitControlsRef = useRef<any>();
@@ -106,7 +107,7 @@ const Editor: VFC = () => {
   }, [applyPersistedState, initialState, isPersistedStateDifferentThanInitial]);
 
   return (
-    <root.div>
+    <div>
       <div id="react-three-editable-editor-root">
         <PortalManager>
           <IdProvider>
@@ -224,11 +225,10 @@ const MyComponent = () => (
                 </Button>
               </ModalFooter>
             </Modal>
-            <style type="text/css">{styles}</style>
           </IdProvider>
         </PortalManager>
       </div>
-    </root.div>
+    </div>
   );
 };
 

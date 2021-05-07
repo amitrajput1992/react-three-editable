@@ -1,6 +1,7 @@
 import React from 'react';
 import { Meta, Story } from '@storybook/react';
 import { Button } from '../src/components/elements';
+import "tailwindcss/tailwind.css";
 
 const meta: Meta = {
   title: 'Button',

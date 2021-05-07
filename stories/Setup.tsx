@@ -1,6 +1,6 @@
 import React, { ReactNode, VFC, Suspense, useRef } from 'react';
-import { Canvas, ContainerProps } from 'react-three-fiber';
-import Suitcase from './Suitcase';
+import { Canvas, Props } from 'react-three-fiber';
+// import Suitcase from './Suitcase';
 
 import {
   Box,
@@ -12,7 +12,7 @@ import {
 } from '@react-three/drei';
 import e from '../src/components/editable';
 
-interface SetupProps extends Omit<ContainerProps, 'children'> {
+interface SetupProps extends Omit<Props, 'children'> {
   children?: ReactNode;
   cameraPosition?: [number, number, number];
   controls?: boolean;
@@ -35,7 +35,7 @@ const SetupScene = () => {
       <EditableCamera makeDefault uniqueName="Camera1" />
       <Suspense fallback={null}>
         {/* @ts-ignore */}
-        <Environment background files="equi.hdr" path={'/'} />
+        {/*<Environment background files="equi.hdr" path={'/'} />*/}
       </Suspense>
       <ambientLight intensity={0.2} />
       <e.spotLight
@@ -63,8 +63,8 @@ const SetupScene = () => {
       <group position={[0, -1, 0]}>
         <e.group uniqueName="monkey" position={[0, 3, 0]}>
           <Suspense fallback={null}>
-            <Suzanne />
-            <Suitcase />
+            {/*<Suzanne />*/}
+            {/*<Suitcase />*/}
           </Suspense>
         </e.group>
         <group position={[0, 1, 0]} scale={[2, 1, 1]}>
@@ -92,16 +92,6 @@ const SetupScene = () => {
   );
 };
 
-const EBox = e(Box, 'mesh');
-
-const SmallScene = () => {
-  return (
-    <EBox castShadow receiveShadow uniqueName="Box">
-      <meshBasicMaterial color="hotpink" />
-    </EBox>
-  );
-};
-
 const Setup: VFC<SetupProps> = ({
   children,
   cameraPosition = [-5, 5, 5] as [number, number, number],
@@ -114,10 +104,9 @@ const Setup: VFC<SetupProps> = ({
       }}
     >
       <Canvas
-        colorManagement
-        shadowMap
+        linear={false}
         camera={{ position: cameraPosition }}
-        pixelRatio={window.devicePixelRatio}
+        dpr={window.devicePixelRatio}
         {...props}
       >
         {children}

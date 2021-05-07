@@ -1,3 +1,4 @@
+/*
 import * as THREE from 'three';
 import React, { useRef } from 'react';
 import { useLoader } from 'react-three-fiber';
@@ -26,7 +27,7 @@ type GLTFResult = GLTF & {
 
 export default function Model(props: JSX.IntrinsicElements['group']) {
   const group = useRef<THREE.Group>();
-  const { nodes } = useLoader<GLTFResult>(GLTFLoader, '/suitcase.gltf');
+  const { nodes } = useLoader(GLTFLoader, '/suitcase.gltf');
 
   const lidRef = useRef<THREE.Mesh>();
 
@@ -76,3 +77,4 @@ export default function Model(props: JSX.IntrinsicElements['group']) {
     </>
   );
 }
+*/
